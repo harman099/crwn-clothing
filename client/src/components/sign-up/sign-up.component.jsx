@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+
 import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
+
 import { signUpStart } from "../../redux/user/user.actions";
-import "./sign-up.styles.scss";
+
+import { SignUpContainer, SignUpTitle } from "./sign-up.styles";
 
 const SignUp = ({ signUpStart }) => {
   const [userCredentials, setUserCredentials] = useState({
@@ -19,9 +22,10 @@ const SignUp = ({ signUpStart }) => {
     event.preventDefault();
 
     if (password !== confirmPassword) {
-      alert("Passwords don't match!");
+      alert("passwords don't match");
       return;
     }
+
     signUpStart({ displayName, email, password });
   };
 
@@ -32,8 +36,8 @@ const SignUp = ({ signUpStart }) => {
   };
 
   return (
-    <div className="sign-up">
-      <h2 className="title">I do not have an account.</h2>
+    <SignUpContainer>
+      <SignUpTitle>I do not have an account</SignUpTitle>
       <span>Sign up with your email and password</span>
       <form className="sign-up-form" onSubmit={handleSubmit}>
         <FormInput
@@ -70,7 +74,7 @@ const SignUp = ({ signUpStart }) => {
         />
         <CustomButton type="submit">SIGN UP</CustomButton>
       </form>
-    </div>
+    </SignUpContainer>
   );
 };
 

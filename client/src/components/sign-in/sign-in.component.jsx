@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+
 import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
 
@@ -8,10 +9,14 @@ import {
   emailSignInStart,
 } from "../../redux/user/user.actions";
 
-import "./sign-in.styles.scss";
+import {
+  SignInContainer,
+  SignInTitle,
+  ButtonsBarContainer,
+} from "./sign-in.styles";
 
 const SignIn = ({ emailSignInStart, googleSignInStart }) => {
-  const [userCredentials, setUserCredentials] = useState({
+  const [userCredentials, setCredentials] = useState({
     email: "",
     password: "",
   });
@@ -20,39 +25,40 @@ const SignIn = ({ emailSignInStart, googleSignInStart }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     emailSignInStart(email, password);
   };
 
   const handleChange = (event) => {
     const { value, name } = event.target;
-    setUserCredentials({ ...userCredentials, [name]: value });
+
+    setCredentials({ ...userCredentials, [name]: value });
   };
 
   return (
-    <div className="sign-in">
-      <h2>I already have an account</h2>
-      <span>Sign in with your email and password.</span>
+    <SignInContainer>
+      <SignInTitle>I already have an account</SignInTitle>
+      <span>Sign in with your email and password</span>
 
       <form onSubmit={handleSubmit}>
         <FormInput
-          type="email"
           name="email"
-          value={email}
+          type="email"
           handleChange={handleChange}
+          value={email}
           label="Email"
           required
         />
-
         <FormInput
-          type="password"
           name="password"
+          type="password"
           value={password}
           handleChange={handleChange}
           label="Password"
           required
         />
-        <div className="buttons">
-          <CustomButton type="submit">Sign in</CustomButton>
+        <ButtonsBarContainer>
+          <CustomButton type="submit"> Sign in </CustomButton>
           <CustomButton
             type="button"
             onClick={googleSignInStart}
@@ -60,9 +66,9 @@ const SignIn = ({ emailSignInStart, googleSignInStart }) => {
           >
             Sign in with Google
           </CustomButton>
-        </div>
+        </ButtonsBarContainer>
       </form>
-    </div>
+    </SignInContainer>
   );
 };
 
